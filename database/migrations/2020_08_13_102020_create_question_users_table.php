@@ -15,18 +15,14 @@ class CreateQuestionUsersTable extends Migration
     public function up()
     {
         Schema::create('question_users', function (Blueprint $table) {
-            $table->increments('question_user_id');
+            $table->primary(['user_id','question_id']);
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('question_id')->unsigned();
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('question_id')->references('question_id')->on('questions');
 
-            $table->primary(['user_id','question_user_id']);
             $table->timestamps();
-
-
-
         });
     }
 
