@@ -5,7 +5,15 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+                <div class="card-header text-center font-weight-bold">{{ __('Register') }}
+                    <br>
+                    <a class = "f-logo" href="#">
+                    <i class="fa fa-facebook-square " style="font-size:30px"></i><span class="ml-3"></span>
+                    </a>
+                    <a class = "f-logo .m-2" href="#">
+                    <i class="fa fa-google"  style="font-size:30px "></i>
+                    </a>
+                </div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
