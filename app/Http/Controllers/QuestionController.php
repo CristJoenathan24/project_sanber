@@ -13,7 +13,7 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        return view('Index');
+        return view('ShowAllDisc');
     }
 
     /**
@@ -49,7 +49,7 @@ class QuestionController extends Controller
      */
     public function show($id)
     {
-        
+
     }
 
     /**

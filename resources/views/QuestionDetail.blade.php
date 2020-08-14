@@ -13,7 +13,7 @@
                 <h3 class="class-title">judul pertanyaan disini</h3>
                 <span class="fc-light mr-3">waktu dibuat</span>
                 <span class="fc-light mr-3">view count</span>
-                <span class="fc-light mr-3">view count</span>
+                <span class="fc-light mr-3">user point</span>
                 <span class="fc-light mr-3">nama penanya</span>
             </div>
 
@@ -33,8 +33,8 @@
             </div>
 
             <div class="card-footer">
-                <label for="answer">answer</label>
-                <input type="text" class="form-control" name="answer" value="" id="answer" placeholder="put your answer here">
+                <label for="answer" >answer</label>
+
                 <textarea name="answer" class="form-control my-editor">{!! old('answer', $answer ?? '') !!}</textarea>
             </div>
         </div>
@@ -79,3 +79,4 @@
     tinymce.init(editor_config);
   </script>
 @endpush
+
