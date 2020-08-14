@@ -16,10 +16,13 @@ class CreateAnswersTable extends Migration
     {
         Schema::create('answers', function (Blueprint $table) {
             $table->bigIncrements('answer_id');
+            $table->unsignedBigInteger('user_id');
             $table->string('answer');
             $table->integer('vote')->default(0);
             $table->integer('relevansi')->default(0);
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

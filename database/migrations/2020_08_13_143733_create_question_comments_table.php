@@ -19,8 +19,8 @@ class CreateQuestionCommentsTable extends Migration
             $table->bigInteger('question_id')->unsigned();
             $table->string('comment');
 
-            $table->foreign('user_id')->references('user_id')->on('question_users');
-            $table->foreign('question_id')->references('question_id')->on('question_users');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('question_id')->references('question_id')->on('questions');
             $table->timestamps();
         });
     }

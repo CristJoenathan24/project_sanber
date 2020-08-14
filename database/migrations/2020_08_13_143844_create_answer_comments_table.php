@@ -19,8 +19,8 @@ class CreateAnswerCommentsTable extends Migration
             $table->bigInteger('answer_id')->unsigned();
             $table->string('comment');
 
-            $table->foreign('user_id')->references('user_id')->on('answer_users');;
-            $table->foreign('answer_id')->references('answer_id')->on('answer_users');
+            $table->foreign('user_id')->references('id')->on('users');;
+            $table->foreign('answer_id')->references('answer_id')->on('answers');
             $table->timestamps();
         });
     }
