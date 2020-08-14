@@ -1,33 +1,32 @@
 @extends('layouts.app')
 
 @section('content')
-<div>
-    <!--rencana pake forelse karena buat index nampilin banyak-->
-    <!--sama mau dikecilin biar jadi kotak aj gitu klu ini kan terlalu full tempatnya-->
-    <div class="card mt-5">
-        <div class="card-header">
-            <h3 class="class-title">judul pertanyaan disini</h3>
-            <span class="fc-light mr-3">waktu dibuat</span>
-            <span class="fc-light mr-3">view count</span>
-            <span class="fc-light mr-3">user point </span>
-            <span class="fc-light mr-3">nama penanya</span>
-        </div>
-
-        <div class="card-body">
-            <p>sdasssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss</p>
-            <form action="#" method="POST">
-                @csrf
-                @method('DELETE')
-                <input type="submit" value="delete" class="btn btn-danger btn-md float-right">
-              </form>
-            <a href="#" class="btn btn-md btn-info float-right mr-2">edit</a>
-            <p><a href="#" class="text-primary">tag</a></p> <!--klo dipencet kebuka semua pertanyaan yg sama tagnya tp klo ribet ga usa-->
-
-
-            <a href=""class="btn btn-primary btn-sm">check answer</a><!--kepikirannya klo di klik pindah kehalaman show buat jawab-->
-        </div>
-
-
+<div class="container-fluid mt-5">
+    @if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
     </div>
+    @endif
+    @forelse ($datas as $data)
+        <div class="card mt-5">
+            <div class="card-header">
+                <h3 class="class-title">{{$data->question_title}}</h3>
+                <span class="fc-light mr-3">created at: {{$data->created_at}} || viewed: {{$data->view_count}}</span>
+            </div>
+
+            <div class="card-body">
+                <p>{{$data->question_body}}</p>
+                <form action="/question/{{ $data->question_id }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <input type="submit" value="delete" class="btn btn-danger btn-md float-right">
+                </form>
+                <a href="/question/{{ $data->question_id }}/edit" class="btn btn-md btn-primary float-right mr-2">edit</a>
+                <a href=""class="btn btn-success btn-md float-right mr-2">check answer</a><!--kepikirannya klo di klik pindah kehalaman show buat jawab-->
+            </div>
+        </div>
+    @empty
+        <h1>No Discussion From You</h1>
+    @endforelse
 </div>
 @endsection

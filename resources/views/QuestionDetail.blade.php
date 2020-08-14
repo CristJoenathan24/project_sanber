@@ -6,30 +6,38 @@
 
 @section('content')
     <div>
-        <!--rencana pake forelse karena buat index nampilin banyak-->
-        <!--sama mau dikecilin biar jadi kotak aj gitu klu ini kan terlalu full tempatnya-->
         <div class="card mt-5">
             <div class="card-header">
-                <h3 class="class-title">judul pertanyaan disini</h3>
-                <span class="fc-light mr-3">waktu dibuat</span>
-                <span class="fc-light mr-3">view count</span>
-                <span class="fc-light mr-3">user point</span>
-                <span class="fc-light mr-3">nama penanya</span>
+                <h3 class="class-title">{{$data->question_title}}</h3>
+                <span class="fc-light mr-3">created at: {{$data->created_at}} || viewed: {{$data->view_count}} || author: {{$data->author->name}} || reputation poin: {{$data->author->reputation_point}}</span>
             </div>
 
             <div class="card-body">
-                <p>sdasssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss</p>
-                <form action="#" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <input type="submit" value="delete" class="btn btn-danger btn-md float-right">
-                  </form>
-                <a href="#" class="btn btn-md btn-info float-right mr-2">edit</a>
-                <p><a href="#" class="text-primary">tag</a></p> <!--klo dipencet kebuka semua pertanyaan yg sama tagnya tp klo ribet ga usa-->
+                <p>{{$data->question_body}}</p>
                 <i class="fa fa-arrow-down rounded float-right mr-2" style="font-size:30px"></i><!--rencananya klo di klik brubah jd ijo klo mager gpp kwkwwk-->
                 <i class="fa fa-arrow-up rounded float-right mr-3" style="font-size:30px"></i>
+                {{-- foreach setiap comment --}}
+                @forelse ($question_comments as $question_comment)
+                    <div class="mt-5 border-top">
+                        {{$question_comment->comment}}
+                    </div>
+                @empty
+                    <div class="mt-5 border-top">
+                        no comment
+                    </div>
+                @endforelse
 
-                <a href=""class="btn btn-primary btn-sm">answer</a><!--kepikirannya klo di klik pindah kehalaman show buat jawab-->
+                {{-- kolom komentar --}}
+                <form role="form" method="POST" action="/answer/comment/explorer/{{$data->question_id}}">
+                    @csrf
+                    @method('POST')
+                    <div style="float: left">
+                        <div class="form-group">
+                            <input type="text" style="width: 80vw" class="form-control" id="AnswerComment" name="AnswerComment" placeholder="comments here">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-sm ml-1">Submit</button>
+                    </div>
+                </form>
             </div>
 
             <div class="card-footer">

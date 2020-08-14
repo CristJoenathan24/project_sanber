@@ -22,6 +22,10 @@
                 </form>
             </ul>
 
+            <ul class="navbar-nav ml-auto">
+                <a class="btn btn-light" href="{{ url('/question/explore') }}">Explore</a>
+            </ul>
+
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
                 <!-- Authentication Links -->
@@ -42,6 +46,7 @@
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ url('/question/create') }}">Make A Discussion</a>
+                            <a class="dropdown-item" href="{{ url('/question') }}">Manage Discussion</a>
 
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();

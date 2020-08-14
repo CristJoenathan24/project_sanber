@@ -16,14 +16,13 @@ class CreateQuestionsTable extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->bigIncrements('question_id');
             $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->string('question_title');
             $table->string('question_body');
-            $table->string('question_tag');
             $table->integer('vote')->default(0);
             $table->integer('view_count')->default(0);
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

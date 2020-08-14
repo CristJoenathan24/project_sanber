@@ -22,9 +22,20 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/question/create','QuestionController@create');
-Route::get('/question','QuestionController@index');
-Route::get('/question/show','QuestionController@show');
 Route::post('/question','QuestionController@store');
+Route::get('/question','QuestionController@index');
+Route::delete('question/{question_id}','QuestionController@destroy');
+Route::get('/question/{question_id}/edit','QuestionController@edit');
+Route::put('/question/{question_id}','QuestionController@update');
+
+Route::get('/question/show','QuestionController@show');
+
+Route::get('/question/explore', 'ExplorerController@index');
+Route::get('/question/explore/{question_id}','ExplorerController@show');
+
+Route::post('/answer/comment/explorer/{question_id}','QuestionCommentsController@store');
+
+
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
