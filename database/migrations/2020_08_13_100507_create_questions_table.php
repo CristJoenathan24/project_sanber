@@ -19,6 +19,7 @@ class CreateQuestionsTable extends Migration
             $table->string('question_body');
             $table->string('question_tag');
             $table->integer('vote')->default(0);
+            $table->integer('view_count')->default(0);
             $table->timestamps();
         });
     }

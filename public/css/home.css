@@ -1,0 +1,16 @@
+.header{
+    color: white;
+    height: 25vw;
+}
+
+.headerContainer{
+    display: flex;
+    height: 25vw;
+    align-items: center;
+}
+
+.headerContent{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
