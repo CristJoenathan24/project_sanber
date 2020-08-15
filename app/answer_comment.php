@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class answer_comment extends Model
 {
     protected $table = "answer_comments";
-    protected $guarded = [];
+    protected $fillable = ['user_id','answer_id','comment'];
 }

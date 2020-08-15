@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\answer_comment;
-use App\question_comment;
-use App\question_tag;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use App\Answer;
 
-class QuestionCommentsController extends Controller
+class AnswerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -37,20 +33,12 @@ class QuestionCommentsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $question_id)
+    public function store(Request $request, $id)
     {
-        question_comment::create([
-            'user_id' => Auth::user()->id,
-            'question_id' => $question_id,
-            'comment' => $request['AnswerComment']
-        ]);
+        dd($request->all());
+        Answer::create([
 
-        // DB::table('answer_comments')->insert([
-        //     'user_id' => Auth::user()->id,
-        //     'answer_id' => 1,
-        //     'comment' => $request['AnswerComment']
-        // ]);
-        return redirect('/question/explore/'.$question_id);
+        ]);
     }
 
     /**

@@ -17,18 +17,20 @@
                 <i class="fa fa-arrow-down rounded float-right mr-2" style="font-size:30px"></i><!--rencananya klo di klik brubah jd ijo klo mager gpp kwkwwk-->
                 <i class="fa fa-arrow-up rounded float-right mr-3" style="font-size:30px"></i>
                 {{-- foreach setiap comment --}}
+                <div class="mb-5">&nbsp</div>
                 @forelse ($question_comments as $question_comment)
-                    <div class="mt-5 border-top">
+                    <div class="border-top ml-5">
+                        <h6>{{$question_comment->author->name}}</h6>
                         {{$question_comment->comment}}
                     </div>
                 @empty
-                    <div class="mt-5 border-top">
+                    <div class="border-top ml-5">
                         no comment
                     </div>
                 @endforelse
 
                 {{-- kolom komentar --}}
-                <form role="form" method="POST" action="/answer/comment/explorer/{{$data->question_id}}">
+                <form class="ml-5" role="form" method="POST" action="/question/comment/explorer/{{$data->question_id}}">
                     @csrf
                     @method('POST')
                     <div style="float: left">
@@ -39,12 +41,35 @@
                     </div>
                 </form>
             </div>
+        </div>
 
-            <div class="card-footer">
-                <label for="answer" >answer</label>
-
-                <textarea name="answer" class="form-control my-editor">{!! old('answer', $answer ?? '') !!}</textarea>
+        <div class="card mt-3">
+            <h2 class="ml-1">Answers</h2>
+            <div class="card-body">
+                @forelse ($answers as $answer)
+                    <div class="border-top">
+                        <h6>{{$answer->author->name}}</h6>
+                        {{$answer->answer}}
+                    </div>
+                @empty
+                    <h6>No Answers Yet</h6>
+                @endforelse
             </div>
+        </div>
+
+        <div class="container-fluid">
+            <form class="ml-5" role="form" method="POST" action="/answer/explorer/{{$data->question_id}}">
+                @csrf
+                @method('POST')
+                <div style="float: left">
+                    <div class="form-group">
+                        {{-- nihh di sini --}}
+                        <label for="answer"><h2>Your Answer</h2></label>
+                        <textarea name="answer" class="form-control my-editor" id="answer">{!! old('answer', $answer ?? '') !!}</textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-sm ml-1">Submit</button>
+                </div>
+            </form>
         </div>
     </div>
 @endsection

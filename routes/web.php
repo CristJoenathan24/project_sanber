@@ -33,7 +33,9 @@ Route::get('/question/show','QuestionController@show');
 Route::get('/question/explore', 'ExplorerController@index');
 Route::get('/question/explore/{question_id}','ExplorerController@show');
 
-Route::post('/answer/comment/explorer/{question_id}','QuestionCommentsController@store');
+Route::post('/question/comment/explorer/{question_id}','QuestionCommentsController@store');
+
+Route::post('/answer/explorer/{question_id}', 'AnswerController@store');
 
 
 

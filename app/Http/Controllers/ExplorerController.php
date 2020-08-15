@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Answer;
 use App\Question;
 use App\question_comment;
 use Illuminate\Http\Request;
@@ -45,7 +46,7 @@ class ExplorerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
         //
     }
@@ -60,8 +61,9 @@ class ExplorerController extends Controller
     {
         $data = Question::where('question_id',$question_id)->first();
         $question_comments = question_comment::where('question_id',$question_id)->take(3)->get();
+        $answers = Answer::where('question_id',$question_id)->get();
         // dd($question_comments);
-        return view('QuestionDetail', compact('data','question_comments'));
+        return view('QuestionDetail', compact('data','question_comments','answers'));
     }
 
     /**
