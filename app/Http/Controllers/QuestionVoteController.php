@@ -76,7 +76,11 @@ class QuestionVoteController extends Controller
 
         $check2 = User::where('id',Auth::user()->id)->first();
 
-        if ($check == null && $check2->reputaion_point > 15) {
+        if($check2 != null){
+            return redirect('/question/explore/'.$id)->with('success','You Have Been Vote Discusion');
+        }else if($check2->reputaion_point <= 15){
+            return redirect('/question/explore/'. $request['question_id'])->with('success','Your Reputation Poin Is under 15');
+        }else if ($check == null && $check2->reputaion_point > 15) {
             // dd($request->all());
             question_user_vote::create([
                 'user_id' => Auth::user()->id,
@@ -89,10 +93,6 @@ class QuestionVoteController extends Controller
             ]);
 
             return redirect('/question/explore/'.$id)->with('success','Success Vote Discusion');
-        }else if($check2 != null){
-            return redirect('/question/explore/'.$id)->with('success','You Have Been Vote Discusion');
-        }else if($check2->reputaion_point <= 15){
-            return redirect('/question/explore/'. $request['question_id'])->with('success','Your Reputation Poin Is under 15');
         }
 
     }
