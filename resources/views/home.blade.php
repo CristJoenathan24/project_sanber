@@ -8,10 +8,10 @@
 <div class="header" style="background-image: url('{{asset('img/background-1.jpg')}}');">
     <div class="container headerContainer">
         <div class="row">
-            <div class="col-md-12 headerContent">
+            <div class="col-md-12 headerContent text-center">.
                 <h1>Welcome To Our Website</h1>
             </div>
-            <div class="col-md-12 headerContent">
+            <div class="col-md-12 headerContent text-center">
                 <h3>The Place that every programmer gather and exchange opinion</h1>
             </div>
         </div>
@@ -20,7 +20,7 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-sm-6">
-          <div class="card" style="height: 35rem;">
+          <div class="card">
             <div class="card-body">
               <div class="card-title text-center">
                   <img src="{{ asset('img/htmlLogo.png') }}" alt="">
@@ -33,7 +33,7 @@
           </div>
         </div>
         <div class="col-sm-6">
-            <div class="card" style="height: 35rem;">
+            <div class="card">
               <div class="card-body">
                 <div class="card-title text-center">
                     <img src="{{ asset('img/cssLogo.png') }}" alt="">
@@ -46,9 +46,9 @@
             </div>
         </div>
     </div>
-    <div class="row mt-5">
+    <div class="row" id="row2">
         <div class="col-sm-6">
-            <div class="card" style="height: 35rem;">
+            <div class="card">
             <div class="card-body">
                 <div class="card-title text-center">
                     <img src="{{ asset('img/jsLogo.png') }}" alt="">
@@ -61,7 +61,7 @@
             </div>
         </div>
         <div class="col-sm-6">
-            <div class="card" style="height: 35rem;">
+            <div class="card">
             <div class="card-body">
                 <div class="card-title text-center">
                     <img src="{{ asset('img/boostrapLogo.png') }}" alt="">
