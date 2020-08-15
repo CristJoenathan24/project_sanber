@@ -42,14 +42,8 @@ class QuestionCommentsController extends Controller
         question_comment::create([
             'user_id' => Auth::user()->id,
             'question_id' => $question_id,
-            'comment' => $request['AnswerComment']
+            'comment' => $request['QuestionComment']
         ]);
-
-        // DB::table('answer_comments')->insert([
-        //     'user_id' => Auth::user()->id,
-        //     'answer_id' => 1,
-        //     'comment' => $request['AnswerComment']
-        // ]);
         return redirect('/question/explore/'.$question_id);
     }
 

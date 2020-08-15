@@ -35,7 +35,7 @@
                     @method('POST')
                     <div style="float: left">
                         <div class="form-group">
-                            <input type="text" style="width: 80vw" class="form-control" id="AnswerComment" name="AnswerComment" placeholder="comments here">
+                            <input type="text" style="width: 80vw" class="form-control" id="QuestionComment" name="QuestionComment" placeholder="comments here">
                         </div>
                         <button type="submit" class="btn btn-primary btn-sm ml-1">Submit</button>
                     </div>
@@ -49,23 +49,52 @@
                 @forelse ($answers as $answer)
                     <div class="border-top">
                         <h6>{{$answer->author->name}}</h6>
-                        {{$answer->answer}}
+                        {!! $answer->answer !!}
                     </div>
+
+                    @forelse ($answer_comments as $answer_comment)
+                        @if ($answer_comment->answer_id === $answer->answer_id)
+                            <div class="border-top ml-5">
+                                <h6>{{$answer_comment->author->name}}</h6>
+                                {{$answer_comment->comment}}
+                            </div>
+                        @endif
+                    @empty
+                        <div class="border-top ml-5">
+                            no comment
+                        </div>
+                    @endforelse
+
+                    <div>
+                        <form class="ml-5" role="form" method="POST" action="/answer/comment/explorer/{{ $answer->answer_id }}">
+                            @csrf
+                            @method('POST')
+                            <div>
+                                <div class="form-group">
+                                    <input type="text" style="width: 80vw" class="form-control" id="AnswerComment" name="AnswerComment" placeholder="comments here">
+                                </div>
+                                <div class="form-group">
+                                    <input type="hidden" id="question_id" name="question_id" value="{{$data->question_id}}">
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-sm ml-1">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                    <br>
                 @empty
                     <h6>No Answers Yet</h6>
                 @endforelse
             </div>
         </div>
 
-        <div class="container-fluid">
+        <div class="container mt-3">
             <form class="ml-5" role="form" method="POST" action="/answer/explorer/{{$data->question_id}}">
                 @csrf
                 @method('POST')
-                <div style="float: left">
+                <div>
                     <div class="form-group">
-                        {{-- nihh di sini --}}
                         <label for="answer"><h2>Your Answer</h2></label>
-                        <textarea name="answer" class="form-control my-editor" id="answer">{!! old('answer', $answer ?? '') !!}</textarea>
+                        <textarea name="answer" class="form-control my-editor" id="answer">{!! old('answer','') !!}</textarea>
                     </div>
                     <button type="submit" class="btn btn-primary btn-sm ml-1">Submit</button>
                 </div>

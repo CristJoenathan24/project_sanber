@@ -2,24 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Answer;
 use App\answer_comment;
-use App\Question;
-use App\question_comment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class ExplorerController extends Controller
+class AnswerCommentsController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -27,8 +15,7 @@ class ExplorerController extends Controller
      */
     public function index()
     {
-        $datas = Question::all();
-        return view('ShowAllDisc', compact('datas'));
+        //
     }
 
     /**
@@ -47,9 +34,14 @@ class ExplorerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $id)
+    public function store(Request $request,$id)
     {
-        //
+        answer_comment::create([
+            'user_id' => Auth::user()->id,
+            'answer_id' => $id,
+            'comment' => $request['AnswerComment']
+        ]);
+        return redirect('/question/explore/'.$request['question_id']);
     }
 
     /**
@@ -58,14 +50,9 @@ class ExplorerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($question_id)
+    public function show($id)
     {
-        $data = Question::where('question_id',$question_id)->first();
-        $question_comments = question_comment::where('question_id',$question_id)->take(3)->get();
-        $answers = Answer::where('question_id',$question_id)->get();
-        $answer_comments = answer_comment::all();
-        // dd($question_comments);
-        return view('QuestionDetail', compact('data','question_comments','answers','answer_comments'));
+        //
     }
 
     /**

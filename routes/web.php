@@ -37,6 +37,7 @@ Route::post('/question/comment/explorer/{question_id}','QuestionCommentsControll
 
 Route::post('/answer/explorer/{question_id}', 'AnswerController@store');
 
+Route::post('/answer/comment/explorer/{answer_id}','AnswerCommentsController@store');
 
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {

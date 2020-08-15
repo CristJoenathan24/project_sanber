@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Answer;
+use Illuminate\Support\Facades\Auth;
 
 class AnswerController extends Controller
 {
@@ -35,10 +36,13 @@ class AnswerController extends Controller
      */
     public function store(Request $request, $id)
     {
-        dd($request->all());
         Answer::create([
-
+            'user_id' => Auth::user()->id,
+            'question_id' => $id,
+            'answer' => $request['answer']
         ]);
+
+        return redirect('/question/explore/'.$id);
     }
 
     /**
