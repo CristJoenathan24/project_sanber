@@ -6,6 +6,13 @@
 
 @section('content')
     <div>
+        <div class="mt-5">
+            @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+            @endif
+        </div>
         <div class="card mt-5">
             <div class="card-header">
                 <h3 class="class-title">{{$data->question_title}}</h3>
@@ -14,9 +21,30 @@
 
             <div class="card-body">
                 <p>{{$data->question_body}}</p>
-                <i class="fa fa-arrow-down rounded float-right mr-2" style="font-size:30px"></i><!--rencananya klo di klik brubah jd ijo klo mager gpp kwkwwk-->
-                <i class="fa fa-arrow-up rounded float-right mr-3" style="font-size:30px"></i>
-                {{-- foreach setiap comment --}}
+                <form class="" role="form" method="POST" action="/vote/down/question/create/{{$data->question_id}}">
+                    @csrf
+                    @method('POST')
+                    <div style="float: right">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <input type="hidden" id="user_id" name="user_id" value="{{Auth::user()->id}}">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-sm ml-1"><i class="fa fa-arrow-down rounded float-right" style="font-size:30px"></i></button>
+                    </div>
+                </form>
+                <form class="" role="form" method="POST" action="/vote/up/question/create/{{$data->question_id}}">
+                    @csrf
+                    @method('POST')
+                    <div style="float: right">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <input type="hidden" id="user_id" name="user_id" value="{{Auth::user()->id}}">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-sm ml-1"><i class="fa fa-arrow-up rounded float-right" style="font-size:30px"></i></button>
+                    </div>
+                </form>
                 <div class="mb-5">&nbsp</div>
                 @forelse ($question_comments as $question_comment)
                     <div class="border-top ml-5">
@@ -44,13 +72,38 @@
         </div>
 
         <div class="card mt-3">
-            <h2 class="ml-1">Answers</h2>
+            <h2 class="ml-1">{{$total_answers}} Answers</h2>
             <div class="card-body">
                 @forelse ($answers as $answer)
                     <div class="border-top">
                         <h6>{{$answer->author->name}}</h6>
                         {!! $answer->answer !!}
                     </div>
+                    <form class="" role="form" method="POST" action="/vote/down/answer/create/{{$answer->answer_id}}">
+                        @csrf
+                        @method('POST')
+                        <div style="float: right">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <input type="hidden" id="question_id" name="question_id" value="{{$data->question_id}}">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-sm ml-1"><i class="fa fa-arrow-down rounded float-right" style="font-size:30px"></i></button>
+                        </div>
+                    </form>
+                    <form class="" role="form" method="POST" action="/vote/up/answer/create/{{$answer->answer_id}}">
+                        @csrf
+                        @method('POST')
+                        <div style="float: right">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <input type="hidden" id="question_id" name="question_id" value="{{$data->question_id}}">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-sm ml-1"><i class="fa fa-arrow-up rounded float-right" style="font-size:30px"></i></button>
+                        </div>
+                    </form>
+                    <div class="mb-5">&nbsp</div>
 
                     @forelse ($answer_comments as $answer_comment)
                         @if ($answer_comment->answer_id === $answer->answer_id)

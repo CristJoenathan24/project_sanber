@@ -64,8 +64,10 @@ class ExplorerController extends Controller
         $question_comments = question_comment::where('question_id',$question_id)->take(3)->get();
         $answers = Answer::where('question_id',$question_id)->get();
         $answer_comments = answer_comment::all();
+        $total_answers = count($answers);
+        // dd($total_answers);
         // dd($question_comments);
-        return view('QuestionDetail', compact('data','question_comments','answers','answer_comments'));
+        return view('QuestionDetail', compact('data','question_comments','answers','answer_comments','total_answers'));
     }
 
     /**

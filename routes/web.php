@@ -39,6 +39,12 @@ Route::post('/answer/explorer/{question_id}', 'AnswerController@store');
 
 Route::post('/answer/comment/explorer/{answer_id}','AnswerCommentsController@store');
 
+Route::post('/vote/up/question/create/{question_id}','QuestionVoteController@Upstore');
+Route::post('/vote/down/question/create/{question_id}','QuestionVoteController@Downstore');
+
+Route::post('/vote/up/answer/create/{question_id}','AnswerVoteController@Upstore');
+Route::post('/vote/down/answer/create/{question_id}','AnswerVoteController@Downstore');
+
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
