@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\question_user_vote;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class QuestionVoteController extends Controller
 {
@@ -47,6 +49,11 @@ class QuestionVoteController extends Controller
                 'user_id' => Auth::user()->id,
                 'question_id' => $id
             ]);
+
+            User::where('id',Auth::user()->id)
+            ->update([
+                'reputation_point' => DB::raw('reputation_point + 10')
+            ]);
             return redirect('/question/explore/'.$id)->with('success','Success Vote Discusion');
         }else{
             return redirect('/question/explore/'.$id)->with('success','You Have Been Vote Discusion');
@@ -67,15 +74,25 @@ class QuestionVoteController extends Controller
             ['question_id',$id]
         ])->first();
 
-        if ($check == null) {
+        $check2 = User::where('id',Auth::user()->id)->first();
+
+        if ($check == null && $check2->reputaion_point > 15) {
             // dd($request->all());
             question_user_vote::create([
                 'user_id' => Auth::user()->id,
                 'question_id' => $id
             ]);
+
+            User::where('id',Auth::user()->id)
+            ->update([
+                'reputation_point' => DB::raw('reputation_point - 1')
+            ]);
+
             return redirect('/question/explore/'.$id)->with('success','Success Vote Discusion');
-        }else{
+        }else if($check2 != null){
             return redirect('/question/explore/'.$id)->with('success','You Have Been Vote Discusion');
+        }else if($check2->reputaion_point <= 15){
+            return redirect('/question/explore/'. $request['question_id'])->with('success','Your Reputation Poin Is under 15');
         }
 
     }

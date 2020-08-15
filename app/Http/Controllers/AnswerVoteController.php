@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Answer;
 use App\answer_user_vote;
+use App\Question;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AnswerVoteController extends Controller
 {
@@ -46,6 +50,11 @@ class AnswerVoteController extends Controller
                 'user_id' => Auth::user()->id,
                 'answer_id' => $id
             ]);
+
+            User::where('id',Auth::user()->id)
+            ->update([
+                'reputation_point' => DB::raw('reputation_point + 10')
+            ]);
             return redirect('/question/explore/'. $request['question_id'])->with('success','Success Vote Answer');
         }else{
             return redirect('/question/explore/'. $request['question_id'])->with('success','You Have Been Vote Answer');
@@ -65,14 +74,23 @@ class AnswerVoteController extends Controller
             ['answer_id',$id]
         ])->first();
 
-        if ($check == null) {
+        $check2 = User::where('id',Auth::user()->id)->first();
+
+        if ($check == null && $check2->reputaion_point > 15) {
             answer_user_vote::create([
                 'user_id' => Auth::user()->id,
                 'answer_id' => $id
             ]);
+
+            User::where('id',Auth::user()->id)
+            ->update([
+                'reputation_point' => DB::raw('reputation_point - 1')
+            ]);
             return redirect('/question/explore/'. $request['question_id'])->with('success','Success Vote Answer');
-        }else{
-            return redirect('/question/explore/'. $request['question_id'])->with('success','You Have Been Vote Answer');
+        }else if($check2 != null){
+            return redirect('/question/explore/'.$id)->with('success','You Have Been Vote Discusion');
+        }else if($check2->reputaion_point <= 15){
+            return redirect('/question/explore/'. $request['question_id'])->with('success','Your Reputation Poin Is under 15');
         }
     }
 
@@ -105,9 +123,30 @@ class AnswerVoteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $answer_id)
     {
-        //
+        // dd($request->all());
+        if($request['user_id'] != Auth::user()->id){
+            Answer::where('answer_id',$answer_id)
+            ->update([
+                'relevansi' => 1
+            ]);
+
+            User::where('id',$request['user_id'])
+                ->update([
+                    'reputation_point' => DB::raw('reputation_point + 15')
+                ]);
+            return redirect('/question/explore/'. $request['question_id'])->with('success','Succees To Aprove The Answer');
+        }else{
+            return redirect('/question/explore/'. $request['question_id'])->with('success','You Cannot Approve Your Answer');
+        }
+
+        // $data = Question::where('question_id',$id)
+        // ->update([
+        //     'question_title' => $request['question_title'],
+        //     'question_body' => $request['question_body'],
+        //     'user_id' => Auth::user()->id
+        // ]);
     }
 
     /**

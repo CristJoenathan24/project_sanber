@@ -70,7 +70,23 @@
                 </form>
             </div>
         </div>
-
+        <div class="card mt-3">
+            <h2 class="ml-1">Approved Answers</h2>
+            <div class="card-body">
+                @forelse($answers as $answer)
+                    @if ($answer->relevansi > 0)
+                        <div class="border-top border-bottom">
+                            <h6>{{$answer->author->name}}</h6>
+                            {!! $answer->answer !!}
+                        </div>
+                    @endif
+                @empty
+                    <div class="border-top border-bottom ml-5">
+                        No Approved Answer By The Discussions Author
+                    </div>
+                @endforelse
+            </div>
+        </div>
         <div class="card mt-3">
             <h2 class="ml-1">{{$total_answers}} Answers</h2>
             <div class="card-body">
@@ -129,11 +145,26 @@
                                 <div class="form-group">
                                     <input type="hidden" id="question_id" name="question_id" value="{{$data->question_id}}">
                                 </div>
-                                <button type="submit" class="btn btn-primary btn-sm ml-1">Submit</button>
+                                <button type="submit" class="btn btn-primary btn-sm">Submit</button>
                             </div>
                         </form>
+                        @if ($data->user_id == Auth::user()->id)
+                        <form class="ml-5" role="form" method="POST" action="/answer/approve/{{ $answer->answer_id }}">
+                            @csrf
+                            @method('PUT')
+                            <div>
+                                <div class="form-group">
+                                    <input type="hidden" id="user_id" name="user_id" value="{{$answer->author->id}}">
+                                </div>
+                                <div class="form-group">
+                                    <input type="hidden" id="question_id" name="question_id" value="{{$data->question_id}}">
+                                </div>
+                                <button type="submit" class="btn btn-success btn-sm">approve</button>
+                            </div>
+                        </form>
+                        @endif
+                        <div class="mb-2">&nbsp</div>
                     </div>
-                    <br>
                 @empty
                     <h6>No Answers Yet</h6>
                 @endforelse

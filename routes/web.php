@@ -44,6 +44,7 @@ Route::post('/vote/down/question/create/{question_id}','QuestionVoteController@D
 
 Route::post('/vote/up/answer/create/{question_id}','AnswerVoteController@Upstore');
 Route::post('/vote/down/answer/create/{question_id}','AnswerVoteController@Downstore');
+Route::put('/answer/approve/{answer_id}','AnswerVoteController@update');
 
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
